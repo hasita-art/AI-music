@@ -4,6 +4,8 @@ leftWristX = 0;
 leftWristY = 0;
 rightWristX = 0;
 rightWristY = 0;
+scoreLeftWrist = 0;
+
 
 function preload(){
     song1 = loadSound("gogo.mp3");
@@ -28,6 +30,9 @@ function modelLoaded() {
 function gotPoses(results) {
     if (results.length > 0) {
         console.log(results);
+        scoreLeftWrist = results[0].pose.keypoints[9].score;
+        console.log("scoreLeftWrist = " + scoreLeftWrist);
+
         leftWristX = results[0].pose.leftWrist.x;
         leftWristY = results[0].pose.leftWrist.y;
         console.log("leftWristX = " + leftWristX + "leftWristY = " + leftwristY);
@@ -41,4 +46,18 @@ function gotPoses(results) {
 
 function draw(){
     image(video, 0, 0, 400, 400);
+
+    fill("#703451");
+    stroke("#703451");
+
+    song1 = song1.isPlaying();
+
+        if(scoreLeftWrist > 0.2){
+        circle(leftWristX, leftWristY, 20);
+        song2.stop();
+        if(song1 == false){
+            song1.play();
+            document.getElementById("song_name").innerHTML = "Gogo";
+        }
+    }
 }
