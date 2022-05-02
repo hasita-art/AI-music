@@ -31,6 +31,7 @@ function gotPoses(results) {
     if (results.length > 0) {
         console.log(results);
         scoreLeftWrist = results[0].pose.keypoints[9].score;
+        scoreRightWrist = results[0].pose.keypoints[10].score;
         console.log("scoreLeftWrist = " + scoreLeftWrist);
 
         leftWristX = results[0].pose.leftWrist.x;
@@ -59,5 +60,16 @@ function draw(){
             song1.play();
             document.getElementById("song_name").innerHTML = "Gogo";
         }
-    }
+        }
+
+    song2 = song2.isPlaying();
+
+        if (scoreRightWrist > 0.2) {
+        circle(rightWristX, rightWristY, 20);
+        song1.stop();
+        if (song2 == false) {
+            song2.play();
+            document.getElementById("song_name").innerHTML = "134340";
+        }
+        }
 }
